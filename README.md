@@ -49,6 +49,7 @@ These `*.cfg` files contain some Free Pascal compiler switches that you can turn
 explanation on available compiler switches, consult Free Pascal documentation.
 
 
+    $ cp app/config/config.json.sample app/config/config.json
     $ cp build.prod.cfg.sample build.prod.cfg
     $ cp build.dev.cfg.sample build.dev.cfg
     $ cp build.cfg.sample build.cfg
