@@ -9,6 +9,9 @@ unit ImageCreateController;
 
 interface
 
+{$MODE OBJFPC}
+{$H+}
+
 uses
 
     Classes,
