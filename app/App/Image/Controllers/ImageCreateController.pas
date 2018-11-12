@@ -32,26 +32,35 @@ uses sysutils,
      fpimage,
      fpcanvas,
      fpimgcanv,
-     fpwritejpeg;
+     fpwritepng;
 
 
     function TImageCreateController.generateJpegImage(const stream : TStream) : TStream;
     var canvas : TFPCustomCanvas;
         image : TFPCustomImage;
         writer : TFPCustomImageWriter;
+        passionRed: TFPColor = (Red: 65535; Green: 0; Blue: 0; Alpha: 65535);
     begin
         { Create an image 100x100 pixels}
         image := TFPMemoryImage.Create(100, 100);
 
         { Attach the image to the canvas }
         canvas := TFPImageCanvas.create(image);
-
         { Create the writer }
-        writer := TFPWriterJpeg.create;
-        result := stream;
+        writer := TFPWriterPng.create;
         try
-
-          image.saveToStream (stream, writer);
+          { Set the pen styles }
+          with canvas do
+          begin
+              pen.mode    := pmCopy;
+              pen.style   := psSolid;
+              pen.width   := 1;
+              pen.FPColor := passionRed;
+          end;
+          { Draw a circle }
+          canvas.Ellipse (10,10, 90,90);
+          image.saveToStream(stream, writer);
+          result := stream;
         finally
             canvas.Free;
             image.Free;
@@ -72,7 +81,7 @@ uses sysutils,
             mem := generateJpegImage(mem);
             result := TBinaryResponse.create(
                 response.headers(),
-                'image/jpeg',
+                'image/png',
                 str
             );
         finally
