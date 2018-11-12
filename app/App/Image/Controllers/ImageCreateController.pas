@@ -19,6 +19,13 @@ uses
 
 type
 
+    (*!------------------------------------------------------------
+     * Controller that handle PNG image generation
+     *-------------------------------------------------------------
+     * Route /image/{width}x{height}.png
+     *
+     * @author Zamrony P. Juhara <zamronypj@yahoo.com>
+     *------------------------------------------------------------- *)
     TImageCreateController = class(TRouteHandler, IDependency)
     private
         procedure getImageResolution(out width: integer; out height:integer);
@@ -49,9 +56,10 @@ uses sysutils,
         (*!------------------------------------
          * get single route argument
          * for route pattern /image/{width}x{height}.png
-         * and actual url /image/200x200.png
+         * and actual url /image/200x100.png
          * placeHolder will contains
-         * { phName : 'name', phValue : 'John'}
+         * { phName : 'width', phValue : '200'}
+         * { phName : 'height', phValue : '100'}
          *--------------------------------------*)
         wPlaceholder := getArg('width');
         hPlaceholder := getArg('height');
@@ -75,6 +83,11 @@ uses sysutils,
         end;
     end;
 
+    (*!------------------------------------
+     * generate PNG image
+     *--------------------------------------
+     * @credit http://wiki.freepascal.org/fcl-image
+     *--------------------------------------*)
     function TImageCreateController.generatePngImage(
         const stream : TStream;
         const width : integer;
@@ -85,7 +98,7 @@ uses sysutils,
         writer : TFPCustomImageWriter;
         passionRed: TFPColor = (Red: 65535; Green: 0; Blue: 0; Alpha: 65535);
     begin
-        { Create an image 300x300 pixels}
+        { Create an image width x height pixels}
         image := TFPMemoryImage.Create(width, height);
 
         { Attach the image to the canvas }
@@ -93,19 +106,19 @@ uses sysutils,
         { Create the writer }
         writer := TFPWriterPng.create;
         try
-          { Set the pen styles }
-          with canvas do
-          begin
-              brush.FPColor:= colBlue;
-              brush.Style := bsSolid;
-              pen.mode    := pmCopy;
-              pen.style   := psSolid;
-              pen.width   := 2;
-              pen.FPColor := passionRed;
-          end;
-          canvas.Ellipse (10,10, image.width-10,image.height-10);
-          image.saveToStream(stream, writer);
-          result := stream;
+            { Set the pen styles }
+            with canvas do
+            begin
+                brush.FPColor:= colBlue;
+                brush.Style := bsSolid;
+                pen.mode    := pmCopy;
+                pen.style   := psSolid;
+                pen.width   := 2;
+                pen.FPColor := passionRed;
+            end;
+            canvas.Ellipse (10,10, image.width-10,image.height-10);
+            image.saveToStream(stream, writer);
+            result := stream;
         finally
             canvas.Free;
             image.Free;

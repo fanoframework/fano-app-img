@@ -24,7 +24,7 @@ If you see something like `Free Pascal Compiler version 3.0.4`,  you are good to
 
 Clone this repository
 
-    $ git clone git@github.com:zamronypj/fano-app.git --recursive
+    $ git clone git@github.com:zamronypj/fano-app-img.git --recursive
 
 `--recursive` is needed so git also pull [Fano](https://github.com/fanoframework/fano) repository.
 
@@ -45,10 +45,7 @@ and run `build.sh` shell script (if you are on Windows, then `build.cmd`).
 These `*.cfg` files contain some Free Pascal compiler switches that you can turn on/off to change how executable is compiled and generated. For complete
 explanation on available compiler switches, consult Free Pascal documentation.
 
-Also copy `app/config/config.json.sample` to `app/config/config.json` and edit
-configuration as needed. For example, you may need to change `baseUrl` to match your own base url so JavaScript or CSS stylesheets point to correct URL.
 
-    $ cp app/config/config.json.sample app/config/config.json
     $ cp build.prod.cfg.sample build.prod.cfg
     $ cp build.dev.cfg.sample build.dev.cfg
     $ cp build.cfg.sample build.cfg
@@ -176,10 +173,6 @@ unit for detecting memory leak (if you enable `-gh` switch in `build.dev.cfg`).
 ## Deployment
 
 You need to deploy only executable binary. Any `pas` or `inc` files or shell scripts is not needed in deployment machine in order application to run.
-
-So for this repository, you will need to copy `public`, `Templates`, `config`
-and `storages` directories to your deployment machine. make sure that
-`storages` directory is writable by web server.
 
 ## Known Issues
 
