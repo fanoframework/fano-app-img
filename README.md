@@ -2,9 +2,12 @@
 
 Web application skeleton using Fano, Pascal web application framework.
 This web application generates PNG image on the fly. The image resolution
-is defined by user in Url.
+is defined by user in Url. For example
 
-
+```
+http://[your app hostname]/image/{width}x{height}.png
+```
+Where `{width}` and `{height}` is integer value between 10 to 300.
 
 ## Requirement
 
