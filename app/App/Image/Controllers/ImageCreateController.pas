@@ -41,18 +41,19 @@ uses sysutils,
         writer : TFPCustomImageWriter;
     begin
         { Create an image 100x100 pixels}
-        image := TFPMemoryImage.Create(100,100);
+        image := TFPMemoryImage.Create(100, 100);
 
         { Attach the image to the canvas }
-        canvas := TFPImageCanvas.Create(image);
+        canvas := TFPImageCanvas.create(image);
 
         { Create the writer }
-        writer := TFPWriterJpeg.Create;
+        writer := TFPWriterJpeg.create;
+        result := stream;
         try
 
           image.saveToStream (stream, writer);
         finally
-            Canvas.Free;
+            canvas.Free;
             image.Free;
             writer.Free;
         end;
