@@ -1,4 +1,4 @@
-# Fano Web Framework Skeleton Application
+# PNG Image Generator Skeleton Application
 
 Web application skeleton using Fano, Pascal web application framework.
 This web application generates PNG image on the fly. The image resolution
