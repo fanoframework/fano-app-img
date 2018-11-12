@@ -1,6 +1,10 @@
 # Fano Web Framework Skeleton Application
 
-Web application skeleton using Fano, Pascal web application framework
+Web application skeleton using Fano, Pascal web application framework.
+This web application generates PNG image on the fly. The image resolution
+is defined by user in Url.
+
+
 
 ## Requirement
 
@@ -135,6 +139,13 @@ and put `.htaccess` file in same directory as `app.cgi` file (i.e., in `app/publ
 
 Content of `.htaccess` basically tells Apache to serve existing files/directories directly. For any non-existing files/directories, pass them to our application.
 
+If successful, when you visit application URL, for example
+
+    http://[your_app_name]/image/100x100.png
+    http://[your_app_name]/image/200x200.png
+
+You will get PNG image displayed.
+
 ### Simulate run on command line
 
 ```
@@ -164,8 +175,7 @@ unit for detecting memory leak (if you enable `-gh` switch in `build.dev.cfg`).
 
 ## Deployment
 
-You need to deploy only executable binary and any supporting files such as HTML templates, images, css stylesheets, application config.
-Any `pas` or `inc` files or shell scripts is not needed in deployment machine in order application to run.
+You need to deploy only executable binary. Any `pas` or `inc` files or shell scripts is not needed in deployment machine in order application to run.
 
 So for this repository, you will need to copy `public`, `Templates`, `config`
 and `storages` directories to your deployment machine. make sure that
