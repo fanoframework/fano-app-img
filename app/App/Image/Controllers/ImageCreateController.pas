@@ -21,7 +21,7 @@ type
 
     TImageCreateController = class(TRouteHandler, IDependency)
     private
-        function generateJpegImage(const stream : TStream) : TStream;
+        function generatePngImage(const stream : TStream) : TStream;
     public
         function handleRequest(
             const request : IRequest;
@@ -38,20 +38,21 @@ uses sysutils,
      fpwritepng;
 
 
-    function TImageCreateController.generateJpegImage(const stream : TStream) : TStream;
+    function TImageCreateController.generatePngImage(const stream : TStream) : TStream;
     var canvas : TFPCustomCanvas;
         image : TFPCustomImage;
         writer : TFPCustomImageWriter;
         passionRed: TFPColor = (Red: 65535; Green: 0; Blue: 0; Alpha: 65535);
     begin
-        { Create an image 100x100 pixels}
-        image := TFPMemoryImage.Create(100, 100);
+        { Create an image 300x300 pixels}
+        image := TFPMemoryImage.Create(300, 300);
 
         { Attach the image to the canvas }
         canvas := TFPImageCanvas.create(image);
         { Create the writer }
         writer := TFPWriterPng.create;
         try
+
           { Set the pen styles }
           with canvas do
           begin
@@ -61,7 +62,7 @@ uses sysutils,
               pen.FPColor := passionRed;
           end;
           { Draw a circle }
-          canvas.Ellipse (10,10, 90,90);
+          canvas.Ellipse (10,10, image.width-10,image.height-10);
           image.saveToStream(stream, writer);
           result := stream;
         finally
@@ -81,7 +82,7 @@ uses sysutils,
         mem := TMemoryStream.create();
         str := TResponseStream.create(mem);
         try
-            mem := generateJpegImage(mem);
+            mem := generatePngImage(mem);
             result := TBinaryResponse.create(
                 response.headers(),
                 'image/png',
