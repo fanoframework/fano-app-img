@@ -6,4 +6,4 @@
  * @license   https://github.com/fanoframework/fano-app-img/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
 
-router.get('/', container.get('imageCreateController') as IRouteHandler);
+router.get('/image/{width}x{height}.png', container.get('imageCreateController') as IRouteHandler);

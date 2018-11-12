@@ -21,7 +21,12 @@ type
 
     TImageCreateController = class(TRouteHandler, IDependency)
     private
-        function generatePngImage(const stream : TStream) : TStream;
+        procedure getImageResolution(out width: integer; out height:integer);
+        function generatePngImage(
+            const stream : TStream;
+            const width : integer;
+            const height : integer
+        ) : TStream;
     public
         function handleRequest(
             const request : IRequest;
@@ -37,31 +42,67 @@ uses sysutils,
      fpimgcanv,
      fpwritepng;
 
+    procedure TImageCreateController.getImageResolution(out width: integer; out height:integer);
+    var wPlaceholder : TPlaceholder;
+        hPlaceholder : TPlaceholder;
+    begin
+        (*!------------------------------------
+         * get single route argument
+         * for route pattern /image/{width}x{height}.png
+         * and actual url /image/200x200.png
+         * placeHolder will contains
+         * { phName : 'name', phValue : 'John'}
+         *--------------------------------------*)
+        wPlaceholder := getArg('width');
+        hPlaceholder := getArg('height');
+        width := strtoInt(wPlaceholder.phValue);
+        height := strtoInt(hPlaceholder.phValue);
+        if (width < 10) then
+        begin
+            width := 10;
+        end;
+        if (height < 10) then
+        begin
+            height := 10;
+        end;
+        if (width > 300) then
+        begin
+            width := 300;
+        end;
+        if (height > 300) then
+        begin
+            height := 300;
+        end;
+    end;
 
-    function TImageCreateController.generatePngImage(const stream : TStream) : TStream;
+    function TImageCreateController.generatePngImage(
+        const stream : TStream;
+        const width : integer;
+        const height : integer
+    ) : TStream;
     var canvas : TFPCustomCanvas;
         image : TFPCustomImage;
         writer : TFPCustomImageWriter;
         passionRed: TFPColor = (Red: 65535; Green: 0; Blue: 0; Alpha: 65535);
     begin
         { Create an image 300x300 pixels}
-        image := TFPMemoryImage.Create(300, 300);
+        image := TFPMemoryImage.Create(width, height);
 
         { Attach the image to the canvas }
         canvas := TFPImageCanvas.create(image);
         { Create the writer }
         writer := TFPWriterPng.create;
         try
-
           { Set the pen styles }
           with canvas do
           begin
+              brush.FPColor:= colBlue;
+              brush.Style := bsSolid;
               pen.mode    := pmCopy;
               pen.style   := psSolid;
-              pen.width   := 1;
+              pen.width   := 2;
               pen.FPColor := passionRed;
           end;
-          { Draw a circle }
           canvas.Ellipse (10,10, image.width-10,image.height-10);
           image.saveToStream(stream, writer);
           result := stream;
@@ -78,11 +119,17 @@ uses sysutils,
     ) : IResponse;
     var str : IResponseStream;
         mem : TStream;
+        w,h : integer;
     begin
+        getImageResolution(w, h);
         mem := TMemoryStream.create();
         str := TResponseStream.create(mem);
         try
-            mem := generatePngImage(mem);
+            mem := generatePngImage(
+                mem,
+                w,
+                h
+            );
             result := TBinaryResponse.create(
                 response.headers(),
                 'image/png',
