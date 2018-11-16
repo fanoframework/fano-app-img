@@ -130,13 +130,11 @@ uses sysutils,
           const request : IRequest;
           const response : IResponse
     ) : IResponse;
-    var str : IResponseStream;
-        mem : TStream;
+    var mem : TStream;
         w,h : integer;
     begin
         getImageResolution(w, h);
         mem := TMemoryStream.create();
-        str := TResponseStream.create(mem);
         try
             mem := generatePngImage(
                 mem,
@@ -146,10 +144,12 @@ uses sysutils,
             result := TBinaryResponse.create(
                 response.headers(),
                 'image/png',
-                str
+                TResponseStream.create(mem)
             );
         finally
-            str := nil;
+            //no need to call mem.free() as this
+            //will be down by response stream
+            mem := nil;
         end;
     end;
 
