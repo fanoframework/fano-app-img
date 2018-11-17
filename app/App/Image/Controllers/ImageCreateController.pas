@@ -96,8 +96,20 @@ uses sysutils,
     var canvas : TFPCustomCanvas;
         image : TFPCustomImage;
         writer : TFPCustomImageWriter;
-        passionRed: TFPColor = (Red: 65535; Green: 0; Blue: 0; Alpha: 65535);
+        borderCol: TFPColor;
+        bgCol :TFPColor;
     begin
+        randomize();
+        //generate random color
+        bgCol.red := random(65535);
+        bgCol.green := random(65535);
+        bgCol.blue := random(65535);
+        bgCol.alpha := 65535;
+        borderCol.red := random(65535);
+        borderCol.green := random(65535);
+        borderCol.blue := random(65535);
+        borderCol.alpha := 65535;
+
         { Create an image width x height pixels}
         image := TFPMemoryImage.Create(width, height);
 
@@ -109,12 +121,12 @@ uses sysutils,
             { Set the pen styles }
             with canvas do
             begin
-                brush.FPColor:= colBlue;
+                brush.FPColor:= bgCol;
                 brush.Style := bsSolid;
                 pen.mode    := pmCopy;
                 pen.style   := psSolid;
                 pen.width   := 2;
-                pen.FPColor := passionRed;
+                pen.FPColor := borderCol;
             end;
             canvas.Ellipse (10,10, image.width-10,image.height-10);
             image.saveToStream(stream, writer);
