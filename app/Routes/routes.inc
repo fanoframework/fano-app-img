@@ -7,3 +7,4 @@
  *------------------------------------------------------------- *)
 
 router.get('/image/{width}x{height}.png', container.get('imageCreateController') as IRouteHandler);
+router.get('/', container.get('homeController') as IRouteHandler);
