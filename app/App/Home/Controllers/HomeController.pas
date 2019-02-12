@@ -49,6 +49,7 @@ implementation
         bodyInst.write('<body>');
         bodyInst.write('<div>Image below is generated on the fly and change color randomly everytime this page is refresh.</div>');
         bodyInst.write('<img src="/image/200x200.png" alt="Random color image">');
+        bodyInst.write('<div><a href="https://fanoframework.github.io">Documentation</a> <a href="https://github.com/fanoframework/fano-app-img">View Source</a></div>');
         bodyInst.write('</body>');
         bodyInst.write('</html>');
         result := response;
