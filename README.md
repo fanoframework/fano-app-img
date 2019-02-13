@@ -8,7 +8,7 @@ is defined by user in Url. For example
 http://[your app hostname]/image/{width}x{height}.png
 ```
 Where `{width}` and `{height}` is integer value between 10 to 300.
-See [live example](http://fano-img.juhara.id).
+See [live example](https://fano-img.juhara.id).
 
 ## Requirement
 
