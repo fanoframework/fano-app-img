@@ -40,7 +40,7 @@ export SOURCE_PROGRAM_NAME="app.pas"
 fi
 
 if [[ -z "${FPC_BIN}" ]]; then
-FPC_BIN="fpc"
+export FPC_BIN="fpc"
 fi
 
 ${FPC_BIN} @fano/fano.cfg @build.cfg ${USER_APP_DIR}/${SOURCE_PROGRAM_NAME}
