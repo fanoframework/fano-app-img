@@ -30,6 +30,7 @@ uses
     (*! -------------------------------
      *   controllers factory
      *----------------------------------- *)
+    HomeControllerFactory,
     ImageCreateControllerFactory;
 
 

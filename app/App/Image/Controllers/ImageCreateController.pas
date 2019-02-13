@@ -160,7 +160,7 @@ uses sysutils,
             );
         finally
             //no need to call mem.free() as this
-            //will be down by response stream
+            //will be done by response stream
             mem := nil;
         end;
     end;
