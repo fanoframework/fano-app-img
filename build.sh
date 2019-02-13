@@ -24,7 +24,7 @@ export USER_APP_DIR="app"
 fi
 
 if [[ -z "${UNIT_OUTPUT_DIR}" ]]; then
-    export UNIT_OUTPUT_DIR="bin/unit"
+export UNIT_OUTPUT_DIR="bin/unit"
 fi
 
 if [[ -z "${EXEC_OUTPUT_DIR}" ]]; then
