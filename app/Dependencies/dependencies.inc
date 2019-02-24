@@ -6,5 +6,6 @@
  * @license   https://github.com/fanoframework/fano-app-img/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
 
- {$INCLUDE main.dependencies.inc}
- {$INCLUDE controllers.dependencies.inc}
+{$INCLUDE main.dependencies.inc}
+{$INCLUDE views.dependencies.inc}
+{$INCLUDE controllers.dependencies.inc}
