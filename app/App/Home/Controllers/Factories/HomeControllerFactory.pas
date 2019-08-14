@@ -36,8 +36,7 @@ uses
         routeMiddlewares := container.get('routeMiddlewares') as IMiddlewareCollectionAware;
         try
             result := THomeController.create(
-                routeMiddlewares.getBefore(),
-                routeMiddlewares.getAfter(),
+                routeMiddlewares,
                 container.get('homeView') as IView,
                 container.get('viewParams') as IViewParameters
             );

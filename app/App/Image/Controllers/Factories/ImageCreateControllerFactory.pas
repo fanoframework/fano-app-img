@@ -35,10 +35,7 @@ uses
     begin
         routeMiddlewares := container.get('routeMiddlewares') as IMiddlewareCollectionAware;
         try
-            result := TImageCreateController.create(
-                routeMiddlewares.getBefore(),
-                routeMiddlewares.getAfter()
-            );
+            result := TImageCreateController.create(routeMiddlewares);
         finally
             routeMiddlewares := nil;
         end;
