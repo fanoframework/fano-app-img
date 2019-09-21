@@ -25,7 +25,7 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *------------------------------------------------------------- *)
-    THomeController = class(TController, IDependency)
+    THomeController = class(TController)
     end;
 
 implementation

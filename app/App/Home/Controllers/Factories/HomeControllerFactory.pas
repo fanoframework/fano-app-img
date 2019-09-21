@@ -31,18 +31,11 @@ uses
     HomeController;
 
     function THomeControllerFactory.build(const container : IDependencyContainer) : IDependency;
-    var routeMiddlewares : IMiddlewareCollectionAware;
     begin
-        routeMiddlewares := container.get('routeMiddlewares') as IMiddlewareCollectionAware;
-        try
-            result := THomeController.create(
-                routeMiddlewares,
-                container.get('homeView') as IView,
-                container.get('viewParams') as IViewParameters
-            );
-        finally
-            routeMiddlewares := nil;
-        end;
+        result := THomeController.create(
+            container.get('homeView') as IView,
+            container.get('viewParams') as IViewParameters
+        );
     end;
 
 end.
