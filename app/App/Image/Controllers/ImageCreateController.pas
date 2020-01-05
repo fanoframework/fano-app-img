@@ -26,9 +26,13 @@ type
      *
      * @author Zamrony P. Juhara <zamronypj@yahoo.com>
      *------------------------------------------------------------- *)
-    TImageCreateController = class(TRouteHandler, IDependency)
+    TImageCreateController = class(TAbstractController)
     private
-        procedure getImageResolution(out width: integer; out height:integer);
+        procedure getImageResolution(
+            const args : IRouteArgsReader;
+            out width: integer;
+            out height:integer
+        );
         function generatePngImage(
             const stream : TStream;
             const width : integer;
@@ -37,7 +41,8 @@ type
     public
         function handleRequest(
             const request : IRequest;
-            const response : IResponse
+            const response : IResponse;
+            const args : IRouteArgsReader
         ) : IResponse; override;
     end;
 
@@ -49,7 +54,11 @@ uses sysutils,
      fpimgcanv,
      fpwritepng;
 
-    procedure TImageCreateController.getImageResolution(out width: integer; out height:integer);
+    procedure TImageCreateController.getImageResolution(
+        const args : IRouteArgsReader;
+        out width: integer;
+        out height:integer
+    );
     var wPlaceholder : TPlaceholder;
         hPlaceholder : TPlaceholder;
     begin
@@ -58,13 +67,13 @@ uses sysutils,
          * for route pattern /image/{width}x{height}.png
          * and actual url /image/200x100.png
          * placeHolder will contains
-         * { phName : 'width', phValue : '200'}
-         * { phName : 'height', phValue : '100'}
+         * { name : 'width', value : '200'}
+         * { name : 'height', value : '100'}
          *--------------------------------------*)
-        wPlaceholder := getArg('width');
-        hPlaceholder := getArg('height');
-        width := strtoInt(wPlaceholder.phValue);
-        height := strtoInt(hPlaceholder.phValue);
+        wPlaceholder := args.getArg('width');
+        hPlaceholder := args.getArg('height');
+        width := strtoInt(wPlaceholder.value);
+        height := strtoInt(hPlaceholder.value);
         if (width < 10) then
         begin
             width := 10;
@@ -139,13 +148,14 @@ uses sysutils,
     end;
 
     function TImageCreateController.handleRequest(
-          const request : IRequest;
-          const response : IResponse
+        const request : IRequest;
+        const response : IResponse;
+        const args : IRouteArgsReader
     ) : IResponse;
     var mem : TStream;
         w,h : integer;
     begin
-        getImageResolution(w, h);
+        getImageResolution(args, w, h);
         mem := TMemoryStream.create();
         try
             mem := generatePngImage(

@@ -5,27 +5,3 @@
  * @copyright Copyright (c) 2018 Zamrony P. Juhara
  * @license   https://github.com/fanoframework/fano-app-img/blob/master/LICENSE (GPL 3.0)
  *------------------------------------------------------------- *)
-
- {-----------------------------------------------
-   register middleware list for each routes that
-   does nothing,
-   need to be use factory so each route will have
-   different middleware list
- ------------------------------------------------}
- container.factory('routeMiddlewares', TNullMiddlewareCollectionAwareFactory.create());
-
- {-----------------------------------------------
-   register application simple router instance
-   which does not support middleware
- ------------------------------------------------}
- container.add('router', TSimpleRouterFactory.create());
-
- {-----------------------------------------------
-   setup application request dispatcher
- ------------------------------------------------}
- container.add(
-     'dispatcher',
-     TSimpleDispatcherFactory.create(
-         container.get('router') as IRouteMatcher
-     )
- );

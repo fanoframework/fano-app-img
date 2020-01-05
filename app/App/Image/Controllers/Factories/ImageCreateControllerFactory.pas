@@ -31,17 +31,8 @@ uses
     ImageCreateController;
 
     function TImageCreateControllerFactory.build(const container : IDependencyContainer) : IDependency;
-    var routeMiddlewares : IMiddlewareCollectionAware;
     begin
-        routeMiddlewares := container.get('routeMiddlewares') as IMiddlewareCollectionAware;
-        try
-            result := TImageCreateController.create(
-                routeMiddlewares.getBefore(),
-                routeMiddlewares.getAfter()
-            );
-        finally
-            routeMiddlewares := nil;
-        end;
+        result := TImageCreateController.create();
     end;
 
 end.
