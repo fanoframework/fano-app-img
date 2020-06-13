@@ -15,13 +15,14 @@ See [live example](https://fano-img.juhara.id).
 - [Free Pascal](https://www.freepascal.org/) >= 3.0
 - [Fano CLI](https://github.com/fanoframework/fano-cli)
 - [Apache mod_cgi](https://httpd.apache.org/docs/current/mod/mod_cgi.html) or [Apache mod_cgid](https://httpd.apache.org/docs/current/mod/mod_cgid.html)
+- [Apache mod_rewrite](https://httpd.apache.org/docs/current/mod/mod_rewrite.html)
 - Administrative privilege to setup virtual host
 
 ## Installation
 
 ### TLDR
 
-Make sure that you have met above requirement
+Make sure that your system have met above requirements.
 
 ```
 $ git clone https://github.com/fanoframework/fano-app-img.git --recursive
@@ -30,6 +31,8 @@ $ ./tools/config.setup.sh
 $ ./build.sh
 $ sudo fanocli --deploy-cgi=img.fano
 ```
+
+Fano CLI is used to setup virtual host. If you prefer setup virtual host manually, you can skip last command.
 
 Open internet browser and open `http://img.fano`, you should see application like [live example](https://fano-img.juhara.id).
 
