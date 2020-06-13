@@ -121,29 +121,34 @@ uses sysutils,
 
         { Create an image width x height pixels}
         image := TFPMemoryImage.Create(width, height);
-
-        { Attach the image to the canvas }
-        canvas := TFPImageCanvas.create(image);
-        { Create the writer }
-        writer := TFPWriterPng.create;
         try
-            { Set the pen styles }
-            with canvas do
-            begin
-                brush.FPColor:= bgCol;
-                brush.Style := bsSolid;
-                pen.mode    := pmCopy;
-                pen.style   := psSolid;
-                pen.width   := 2;
-                pen.FPColor := borderCol;
+            { Attach the image to the canvas }
+            canvas := TFPImageCanvas.create(image);
+            try
+                { Create the writer }
+                writer := TFPWriterPng.create;
+                try
+                    { Set the pen styles }
+                    with canvas do
+                    begin
+                        brush.FPColor:= bgCol;
+                        brush.Style := bsSolid;
+                        pen.mode    := pmCopy;
+                        pen.style   := psSolid;
+                        pen.width   := 2;
+                        pen.FPColor := borderCol;
+                    end;
+                    canvas.Ellipse (10,10, image.width-10,image.height-10);
+                    image.saveToStream(stream, writer);
+                    result := stream;
+                finally
+                    writer.Free;
+                end;
+            finally
+                canvas.Free;
             end;
-            canvas.Ellipse (10,10, image.width-10,image.height-10);
-            image.saveToStream(stream, writer);
-            result := stream;
         finally
-            canvas.Free;
             image.Free;
-            writer.Free;
         end;
     end;
 
