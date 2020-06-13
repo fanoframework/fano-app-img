@@ -14,7 +14,7 @@ See [live example](https://fano-img.juhara.id).
 
 - [Free Pascal](https://www.freepascal.org/) >= 3.0
 - [Fano CLI](https://github.com/fanoframework/fano-cli)
-- [Apache mod_cgi](https://httpd.apache.org/docs/current/mod/mod_cgi.html) or [Apache mod_cgid](https://httpd.apache.org/docs/current/mod/mod_cgi.html)
+- [Apache mod_cgi](https://httpd.apache.org/docs/current/mod/mod_cgi.html) or [Apache mod_cgid](https://httpd.apache.org/docs/current/mod/mod_cgid.html)
 - Administrative privilege to setup virtual host
 
 ## Installation
