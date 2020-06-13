@@ -13,35 +13,27 @@ See [live example](https://fano-img.juhara.id).
 ## Requirement
 
 - [Free Pascal](https://www.freepascal.org/) >= 3.0
-- [libcurl development](https://curl.haxx.se/libcurl/)
-- Web Server (Apache, nginx)
-- [Fano Framework](https://github.com/fanoframework/fano)
+- [Fano CLI](https://github.com/fanoframework/fano-cli)
+- [Apache mod_cgi](https://httpd.apache.org/docs/current/mod/mod_cgi.html) or [Apache mod_cgid](https://httpd.apache.org/docs/current/mod/mod_cgi.html)
+- Administrative privilege to setup virtual host
 
 ## Installation
 
+### TLDR
+
+Make sure that you have met above requirement
+
+```
+$ git clone https://github.com/fanoframework/fano-app-img.git --recursive
+$ cd fano-app-img
+$ ./tools/config.setup.sh
+$ ./build.sh
+$ sudo fanocli --deploy-cgi=img.fano
+```
+
+Open internet browser and open `http://img.fano`, you should see application like [live example](https://fano-img.juhara.id).
+
 ### Build
-
-#### libcurl development package installation
-
-Check if libcurl package for development is installed by running `curl-config`.
-
-```
-$ curl-config --version
-```
-If libcurl installed you will get something like `libcurl x.xx.x` where `x.xx.x` is version. For example `libcurl 7.47.0` otherwise you get
-
-```
-The program 'curl-config' can be found in the following packages:
- * libcurl4-gnutls-dev
- * libcurl4-nss-dev
- * libcurl4-openssl-dev
-Try: sudo apt install <selected package>
-```
-
-In case libcurl not installed, run
-```
-$ sudo apt install libcurl4-gnutls-dev
-```
 
 ### Free Pascal installation
 
@@ -124,8 +116,8 @@ environment variable. By default is `app.cgi` filename.
 ## Run
 
 ### Run with a webserver
-
 Setup a virtual host. Please consult documentation of web server you use.
+You can skip this section if you use Fano CLI to setup virtual host for you.
 
 For example on Apache,
 
